@@ -1,0 +1,25 @@
+task:
+  name: "Recovery-Builder"
+  timeout_in: 480m  
+  container:
+      image: marvelmathesh/docker:rom
+      cpu: 8
+      memory: 16G
+
+  Build-Env-Setup_background_script:
+       - export DEBIAN_FRONTEND=noninteractive
+       - apt update
+       - apt install sudo
+       - DEBIAN_FRONTEND=noninteractive
+       - sudo apt install python2 -y
+       - sudo ln -sf /usr/bin/python2 /usr/bin/python
+       - mkdir -p /tmp/ccache
+       - cd /tmp
+
+  Storage-Checker_background_script:
+      - df -h
+      - lsblk
+      - ls -l -a -h
+
+  Build_script:
+      - bash build.sh
